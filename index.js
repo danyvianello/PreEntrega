@@ -25,30 +25,35 @@ console.log("inicio del proyecto hola mundo")
  
 *Consultar Todos los Productos:
 
- Si ejecutas npm run start GET products, el programa debe realizar una petición asíncrona a la API y devolver la lista completa de productos en la consola.
+    Si ejecutas npm run start GET products, el programa debe realizar una petición asíncrona a la API y devolver la lista completa de productos en la consola.
 
- Ejemplo: npm run start GET products
+    Ejemplo: npm run start GET products
 
 * Consultar un Producto Específico:Si ejecutas npm run start GET products/<productId>, 
    el programa debe obtener y mostrar el producto correspondiente al productId indicado.Ejemplo: npm run start GET products/15
 
 *Crear un Producto Nuevo:
- Si ejecutas npm run start POST products <title> <price> <category>, el programa debe enviar una petición POST a la API para agregar un nuevo producto con los datos proporcionados 
- (title, price, category) y devolver el resultado en la consola.
- Ejemplo: npm run start POST products T-Shirt-Rex 300 remeras
- 
+    Si ejecutas npm run start POST products <title> <price> <category>, el programa debe enviar una petición POST a la API para agregar un nuevo producto con los datos proporcionados 
+    (title, price, category) y devolver el resultado en la consola.
+    Ejemplo: npm run start POST products T-Shirt-Rex 300 remeras
+
+ *Eliminar un Producto:
+
+    Si ejecutas npm run start DELETE products/<productId>, el programa debe enviar una petición DELETE para eliminar el producto correspondiente al productId y devolver la respuesta en la consola.
+
+    Ejemplo: npm run start DELETE products/7
  
  */
 const url_API = "https://fakestoreapi.com"
 
 const argumentos = process.argv.slice(2)
 
-const argumentos_validos = ["GET", "POST", "PUT", "DELETE"]
+const argumentos_validos = ["GET", "POST", "DELETE"]
 
 console.log(argumentos)
 
 async function programa_principal(argumentos = []) {
-    if (!argumentos[0] in argumentos_validos){
+    if (!(argumentos[0] in argumentos_validos)){
         console.log("Comando incorrecto")
         return
     }
@@ -64,6 +69,8 @@ async function programa_principal(argumentos = []) {
                         break
                     }
                     const data = await response.json()
+
+// para que la tabla se imprima bien en consola se debe tener que definir el numero de columnas que se van a imprimir para evitar logos y otras cosas de los productos
                     const filas = data.map(({ id, title, price, category, rating }) => ({
                         id,
                         titulo:
@@ -154,3 +161,11 @@ async function programa_principal(argumentos = []) {
 }
 
 programa_principal(argumentos)
+
+/*
+ * Ejemplo de POST válido (mismo formato que el encabezado del proyecto):
+ *   npm run start -- POST products T-Shirt-Rex 300 remeras
+ *
+ * Si el título lleva espacios, entre comillas:
+ *   npm run start -- POST products "Remera algodón" 29.99 remeras
+ */

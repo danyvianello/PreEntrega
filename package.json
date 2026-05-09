@@ -1,0 +1,12 @@
+{
+  "name": "preentrega",
+  "version": "1.0.0",
+  "description": "manejas estructuras, APIs y lógica dinámica. ",
+  "license": "ISC",
+  "author": "Marcos Daniel Vianello",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start":"node index.js"
+  }
+}
